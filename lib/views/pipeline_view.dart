@@ -122,7 +122,7 @@ class _PipelineViewState extends State<PipelineView> {
               subtitle: 'Gestión activa del embudo de ventas y forecast comercial',
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.refresh, color: AppColors.primary),
+                  icon: const Icon(Icons.refresh, color: AppColors.white),
                   onPressed: _loadData,
                   tooltip: 'Actualizar',
                 ),

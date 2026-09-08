@@ -214,14 +214,14 @@ class _ProspectsViewState extends State<ProspectsView> {
           _loadProspects();
         }
       },
-      selectedColor: AppColors.primary,
+      selectedColor: AppColors.tealAccent,
       backgroundColor: AppColors.white,
       labelStyle: TextStyle(
         color: isSelected ? AppColors.white : AppColors.textPrimary,
         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         fontSize: 13,
       ),
-      side: BorderSide(color: isSelected ? AppColors.primary : AppColors.border),
+      side: BorderSide(color: isSelected ? AppColors.tealAccent : AppColors.border),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     );
   }

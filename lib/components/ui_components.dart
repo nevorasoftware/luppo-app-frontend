@@ -308,13 +308,21 @@ class MetricHeroCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.primary,
+            AppColors.secondaryBlue,
+          ],
+        ),
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.secondaryBlue.withOpacity(0.5), width: 1),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.2),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
+            color: AppColors.primary.withOpacity(0.25),
+            blurRadius: 20,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -435,7 +443,8 @@ class LuppoFocusBox extends StatelessWidget {
             ElevatedButton(
               onPressed: onAction,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
+                backgroundColor: AppColors.tealAccent,
+                foregroundColor: AppColors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               ),
               child: Text(actionLabel!),

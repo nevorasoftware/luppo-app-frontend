@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'config/app_colors.dart';
 import 'config/app_theme.dart';
 import 'core/api_client.dart';
@@ -118,27 +118,29 @@ class _AppShellState extends State<AppShell> {
       backgroundColor: AppColors.background,
       appBar: !isDesktop
           ? AppBar(
+              backgroundColor: AppColors.primary,
+              foregroundColor: AppColors.white,
               title: Row(
                 children: [
                   Container(
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: AppColors.accent,
+                      color: AppColors.tealAccent,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(Icons.show_chart, color: Colors.white, size: 20),
+                    child: const Icon(Icons.show_chart, color: AppColors.white, size: 20),
                   ),
                   const SizedBox(width: 10),
                   Text(
                     _navItems[_selectedIndex].title,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.white),
                   ),
                 ],
               ),
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.logout, size: 20),
+                  icon: const Icon(Icons.logout, size: 20, color: AppColors.white),
                   tooltip: 'Cerrar Sesión',
                   onPressed: widget.onLogout,
                 ),

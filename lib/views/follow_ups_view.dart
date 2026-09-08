@@ -149,7 +149,7 @@ class _FollowUpsViewState extends State<FollowUpsView> with SingleTickerProvider
               child: TabBar(
                 controller: _tabController,
                 indicatorColor: AppColors.tealAccent,
-                labelColor: AppColors.primary,
+                labelColor: AppColors.tealAccent,
                 unselectedLabelColor: AppColors.textSecondary,
                 labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                 tabs: [
