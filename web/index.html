@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <base href="$FLUTTER_BASE_HREF">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Luppo — Plataforma Inteligente de Gestión Comercial. Organiza tus clientes, da seguimiento y mantén tus oportunidades en movimiento.">
+  <meta name="theme-color" content="#112A46">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Luppo">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Luppo — Plataforma Inteligente de Gestión Comercial</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      background-color: #F5F7FA;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #112A46;
+      color: #FFFFFF;
+    }
+    .loading-spinner {
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top: 4px solid #19A7A0;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <h2 style="font-weight: 600; letter-spacing: 1px; margin: 0;">LUPPO</h2>
+    <span style="color: #19A7A0; font-size: 14px; margin-top: 6px;">Ventas en movimiento</span>
+  </div>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
