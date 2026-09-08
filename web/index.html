@@ -54,6 +54,23 @@
     <h2 style="font-weight: 600; letter-spacing: 1px; margin: 0;">LUPPO</h2>
     <span style="color: #19A7A0; font-size: 14px; margin-top: 6px;">Ventas en movimiento</span>
   </div>
-  <script src="flutter_bootstrap.js" async></script>
+  <script>
+    // Limpiar cualquier Service Worker y caché anterior para asegurar la versión más reciente
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (let name of names) {
+          caches.delete(name);
+        }
+      });
+    }
+  </script>
+  <script src="flutter_bootstrap.js?v=2" async></script>
 </body>
 </html>

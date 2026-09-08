@@ -7,7 +7,7 @@ RUN flutter pub get
 
 COPY . .
 ARG API_BASE_URL=https://luppo-app-backend-production.up.railway.app
-RUN flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL}
+RUN flutter build web --release --pwa-strategy=none --dart-define=API_BASE_URL=${API_BASE_URL}
 
 # Stage 2: Serve with Nginx
 FROM nginx:alpine
