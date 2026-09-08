@@ -16,6 +16,63 @@ class ApiClient {
 
   VoidCallback? onSessionExpired;
 
+  // --- Métodos Estáticos de Conveniencia ---
+  static ApiClient get instance => _instance;
+
+  static Future<String?> getToken() async {
+    if (_instance._currentSession == null) {
+      await _instance.initSession();
+    }
+    return _instance._currentSession?.token;
+  }
+
+  static Future<AuthSession?> getStoredUser() async {
+    if (_instance._currentSession == null) {
+      await _instance.initSession();
+    }
+    return _instance._currentSession;
+  }
+
+  static Future<AuthSession> login(String email, String password) async {
+    final response = await _instance.post('/auth/login', {
+      'email': email,
+      'password': password,
+    });
+    final session = AuthSession.fromJson(response['data'] as Map<String, dynamic>);
+    await _instance.saveSession(session);
+    return session;
+  }
+
+  static Future<void> logout() async {
+    await _instance.clearSession();
+  }
+
+  static Future<List<OpportunityDTO>> getOpportunities() async {
+    try {
+      final res = await _instance.get('/opportunities?size=100');
+      final data = res['data'];
+      List<dynamic> items = [];
+      if (data is Map<String, dynamic> && data.containsKey('content')) {
+        items = data['content'] as List<dynamic>;
+      } else if (data is List) {
+        items = data;
+      }
+      return items.map((e) => OpportunityDTO.fromJson(e as Map<String, dynamic>)).toList();
+    } catch (e) {
+      debugPrint('Error al obtener oportunidades: $e');
+      return [];
+    }
+  }
+
+  static Future<OpportunityDTO> updateOpportunity(String id, Map<String, dynamic> data) async {
+    final payload = Map<String, dynamic>.from(data);
+    if (payload.containsKey('stageName') && !payload.containsKey('stage')) {
+      payload['stage'] = payload['stageName'];
+    }
+    final res = await _instance.put('/opportunities/$id', payload);
+    return OpportunityDTO.fromJson(res['data'] as Map<String, dynamic>);
+  }
+
   Future<void> initSession() async {
     final prefs = await SharedPreferences.getInstance();
     final sessionJson = prefs.getString('luppo_session');

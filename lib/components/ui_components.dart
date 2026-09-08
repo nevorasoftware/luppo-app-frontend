@@ -7,13 +7,15 @@ class LuppoTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String subtitle;
   final VoidCallback? onLogout;
   final String userFullName;
+  final List<Widget>? actions;
 
   const LuppoTopBar({
     super.key,
     required this.title,
     this.subtitle = 'Tu espacio comercial',
     this.onLogout,
-    required this.userFullName,
+    this.userFullName = '',
+    this.actions,
   });
 
   @override
@@ -76,19 +78,23 @@ class LuppoTopBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           Row(
             children: [
-              CircleAvatar(
-                radius: 16,
-                backgroundColor: AppColors.tealAccent,
-                child: Text(
-                  userFullName.isNotEmpty ? userFullName[0].toUpperCase() : 'U',
-                  style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 13),
+              if (actions != null) ...actions!,
+              if (userFullName.isNotEmpty) ...[
+                const SizedBox(width: 8),
+                CircleAvatar(
+                  radius: 16,
+                  backgroundColor: AppColors.tealAccent,
+                  child: Text(
+                    userFullName.isNotEmpty ? userFullName[0].toUpperCase() : 'U',
+                    style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Text(
-                userFullName,
-                style: const TextStyle(color: AppColors.white, fontSize: 13, fontWeight: FontWeight.w500),
-              ),
+                const SizedBox(width: 10),
+                Text(
+                  userFullName,
+                  style: const TextStyle(color: AppColors.white, fontSize: 13, fontWeight: FontWeight.w500),
+                ),
+              ],
               if (onLogout != null) ...[
                 const SizedBox(width: 16),
                 IconButton(
@@ -174,6 +180,8 @@ class StatCard extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final VoidCallback? onTap;
+  final String? badgeText;
+  final Color? badgeColor;
 
   const StatCard({
     super.key,
@@ -183,6 +191,8 @@ class StatCard extends StatelessWidget {
     required this.icon,
     this.iconColor = AppColors.tealAccent,
     this.onTap,
+    this.badgeText,
+    this.badgeColor,
   });
 
   @override
@@ -210,13 +220,16 @@ class StatCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  title.toUpperCase(),
-                  style: const TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0.5,
+                Expanded(
+                  child: Text(
+                    title.toUpperCase(),
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.5,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Container(
@@ -230,13 +243,35 @@ class StatCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            Text(
-              value,
-              style: const TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                Text(
+                  value,
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                if (badgeText != null) ...[
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: (badgeColor ?? iconColor).withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      badgeText!,
+                      style: TextStyle(
+                        color: badgeColor ?? iconColor,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
             ),
             if (subtitle != null) ...[
               const SizedBox(height: 4),

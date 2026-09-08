@@ -16,4 +16,11 @@ class AppColors {
   static const Color border = Color(0xFFD8E2EA);        // Separadores, contornos, tablas, inputs
   static const Color textSecondary = Color(0xFF667085); // Etiquetas, ayudas, soporte
   static const Color warningBg = Color(0xFFFFF9EF);     // Alertas, avisos
+
+  // Aliases de compatibilidad UI
+  static const Color accent = tealAccent;
+  static const Color secondary = secondaryBlue;
+  static const Color surface = white;
+  static const Color divider = border;
+  static const Color accentSoft = accentBg;
 }

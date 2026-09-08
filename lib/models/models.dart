@@ -17,18 +17,33 @@ class AuthSession {
     required this.roles,
   });
 
+  String get firstName {
+    if (fullName.trim().isEmpty) return email.split('@').first;
+    return fullName.trim().split(' ').first;
+  }
+
+  String get lastName {
+    final parts = fullName.trim().split(' ');
+    return parts.length > 1 ? parts.sublist(1).join(' ') : '';
+  }
+
   factory AuthSession.fromJson(Map<String, dynamic> json) {
     return AuthSession(
       token: json['token'] ?? '',
       refreshToken: json['refreshToken'] ?? '',
-      userId: json['userId'] ?? '',
+      userId: json['userId']?.toString() ?? '',
       email: json['email'] ?? '',
-      fullName: json['fullName'] ?? '',
+      fullName: json['fullName'] ??
+          (json['firstName'] != null
+              ? '${json['firstName']} ${json['lastName'] ?? ''}'.trim()
+              : ''),
       title: json['title'] ?? 'Ejecutivo Comercial',
       roles: (json['roles'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
     );
   }
 }
+
+typedef AuthResponse = AuthSession;
 
 class DashboardOverview {
   final String todayFormatted;
@@ -334,5 +349,59 @@ class FollowUpItem {
       status: json['status'] ?? 'PENDIENTE',
       overdue: json['overdue'] ?? false,
     );
+  }
+}
+
+class OpportunityDTO {
+  final String id;
+  final String title;
+  final String prospectName;
+  final double estimatedValue;
+  final int probability;
+  final String stageName;
+  final String? customerName;
+  final String? productName;
+  final String? notes;
+
+  OpportunityDTO({
+    required this.id,
+    required this.title,
+    required this.prospectName,
+    required this.estimatedValue,
+    required this.probability,
+    required this.stageName,
+    this.customerName,
+    this.productName,
+    this.notes,
+  });
+
+  factory OpportunityDTO.fromJson(Map<String, dynamic> json) {
+    return OpportunityDTO(
+      id: json['id']?.toString() ?? '',
+      title: json['title'] ?? '',
+      prospectName: json['prospectName'] ?? json['customerName'] ?? 'Prospecto',
+      estimatedValue: (json['estimatedValue'] ?? json['amount'] as num?)?.toDouble() ?? 0.0,
+      probability: (json['probability'] as num?)?.toInt() ?? 0,
+      stageName: json['stageName'] ?? json['stage'] ?? 'Contacto Inicial',
+      customerName: json['customerName'],
+      productName: json['productName'],
+      notes: json['notes'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'prospectName': prospectName,
+      'estimatedValue': estimatedValue,
+      'amount': estimatedValue,
+      'probability': probability,
+      'stageName': stageName,
+      'stage': stageName,
+      'customerName': customerName,
+      'productName': productName,
+      'notes': notes,
+    };
   }
 }

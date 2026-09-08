@@ -17,7 +17,7 @@ class AppTheme {
         onSurface: AppColors.textPrimary,
       ),
       fontFamily: 'Segoe UI',
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.white,
         elevation: 0,
         shape: RoundedRectangleBorder(

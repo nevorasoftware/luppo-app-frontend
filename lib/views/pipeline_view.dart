@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../config/app_colors.dart';
 import '../core/api_client.dart';
@@ -16,7 +16,7 @@ class _PipelineViewState extends State<PipelineView> {
   bool _isLoading = true;
   String? _error;
   List<OpportunityDTO> _opportunities = [];
-  final _currencyFormat = NumberFormat.currency(locale: 'es_MX', symbol: '$', decimalDigits: 2);
+  final _currencyFormat = NumberFormat.currency(locale: 'es_MX', symbol: r'$', decimalDigits: 2);
 
   final List<String> _stages = [
     'Contacto Inicial',
