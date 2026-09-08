@@ -6,7 +6,7 @@ COPY pubspec.yaml ./
 RUN flutter pub get
 
 COPY . .
-ARG API_BASE_URL=https://luppo-api-production.up.railway.app
+ARG API_BASE_URL=https://luppo-app-backend-production.up.railway.app
 RUN flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL}
 
 # Stage 2: Serve with Nginx
