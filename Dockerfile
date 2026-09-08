@@ -1,4 +1,4 @@
-﻿# Stage 1: Build Flutter Web
+# Stage 1: Build Flutter Web
 FROM ghcr.io/cirruslabs/flutter:stable AS build
 
 WORKDIR /app
@@ -12,7 +12,9 @@ RUN flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL}
 # Stage 2: Serve with Nginx
 FROM nginx:alpine
 COPY --from=build /app/build/web /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Template for dynamic port replacement on Railway
-CMD ["sh", "-c", "sed -i \"s/listen 80;/listen ${PORT:-80};/\" /etc/nginx/nginx.conf && nginx -g 'daemon off;'"]
+EXPOSE 80
+
+# Dynamic port replacement for Railway and run Nginx
+CMD ["sh", "-c", "sed -i \"s/listen 80;/listen ${PORT:-80};/\" /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
