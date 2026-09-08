@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../config/app_colors.dart';
 import '../core/api_client.dart';
 import '../models/models.dart';
+import '../components/ui_components.dart';
 
 class LoginView extends StatefulWidget {
   final Function(AuthResponse) onLoginSuccess;
@@ -143,17 +144,10 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // Ícono de onda de pulso comercial (estilo exacto de la referencia)
-                      Center(
-                        child: SizedBox(
-                          width: 80,
-                          height: 48,
-                          child: CustomPaint(
-                            painter: LuppoPulsePainter(
-                              color: AppColors.tealAccent,
-                              strokeWidth: 4.0,
-                            ),
-                          ),
+                      // Ícono oficial Luppo (Diana iris concéntrica)
+                      const Center(
+                        child: LuppoLogo(
+                          size: 64,
                         ),
                       ),
                       const SizedBox(height: 14),

@@ -1,6 +1,79 @@
 import 'package:flutter/material.dart';
 import '../config/app_colors.dart';
 
+// 0. Official Luppo Logo (Concentric Target Iris)
+class LuppoLogo extends StatelessWidget {
+  final double size;
+  final bool showText;
+  final Color textColor;
+  final double fontSize;
+
+  const LuppoLogo({
+    super.key,
+    this.size = 56,
+    this.showText = false,
+    this.textColor = AppColors.white,
+    this.fontSize = 24,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.primary,
+            border: Border.all(color: AppColors.secondaryBlue, width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.tealAccent.withOpacity(0.25),
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Container(
+              width: size * 0.62,
+              height: size * 0.62,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.white,
+              ),
+              child: Center(
+                child: Container(
+                  width: size * 0.34,
+                  height: size * 0.34,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.tealAccent,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        if (showText) ...[
+          const SizedBox(height: 10),
+          Text(
+            'LUPPO',
+            style: TextStyle(
+              color: textColor,
+              fontSize: fontSize,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 3,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
 // 1. App TopBar
 class LuppoTopBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -35,24 +108,20 @@ class LuppoTopBar extends StatelessWidget implements PreferredSizeWidget {
         children: [
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppColors.tealAccent.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(color: AppColors.tealAccent.withOpacity(0.4)),
-                ),
-                child: const Text(
-                  'LUPPO',
-                  style: TextStyle(
-                    color: AppColors.tealAccent,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1.5,
-                    fontSize: 13,
-                  ),
+              const LuppoLogo(size: 32),
+              const SizedBox(width: 12),
+              const Text(
+                'LUPPO',
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 2.0,
+                  fontSize: 15,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 16),
+              Container(width: 1, height: 24, color: AppColors.secondaryBlue),
+              const SizedBox(width: 16),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

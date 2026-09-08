@@ -9,6 +9,7 @@ import 'views/prospects_view.dart';
 import 'views/prospecting_view.dart';
 import 'views/pipeline_view.dart';
 import 'views/follow_ups_view.dart';
+import 'components/ui_components.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,8 +65,21 @@ class _LuppoAppState extends State<LuppoApp> {
       theme: AppTheme.lightTheme,
       home: _isCheckingAuth
           ? const Scaffold(
-              backgroundColor: AppColors.background,
-              body: Center(child: CircularProgressIndicator(color: AppColors.accent)),
+              backgroundColor: Color(0xFF0B1B2D),
+              body: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    LuppoLogo(size: 64, showText: true),
+                    SizedBox(height: 24),
+                    SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(color: AppColors.tealAccent, strokeWidth: 2.5),
+                    ),
+                  ],
+                ),
+              ),
             )
           : _currentUser == null
               ? LoginView(onLoginSuccess: _handleLoginSuccess)
@@ -122,15 +136,7 @@ class _AppShellState extends State<AppShell> {
               foregroundColor: AppColors.white,
               title: Row(
                 children: [
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: AppColors.tealAccent,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Icon(Icons.show_chart, color: AppColors.white, size: 20),
-                  ),
+                  const LuppoLogo(size: 26),
                   const SizedBox(width: 10),
                   Text(
                     _navItems[_selectedIndex].title,
@@ -164,17 +170,7 @@ class _AppShellState extends State<AppShell> {
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
                     child: Row(
                       children: [
-                        Container(
-                          width: 38,
-                          height: 38,
-                          decoration: BoxDecoration(
-                            color: AppColors.secondaryBlue,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Center(
-                            child: Icon(Icons.show_chart, color: AppColors.tealAccent, size: 24),
-                          ),
-                        ),
+                        const LuppoLogo(size: 34),
                         const SizedBox(width: 12),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
