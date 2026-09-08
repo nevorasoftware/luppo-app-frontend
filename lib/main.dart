@@ -175,15 +175,8 @@ class _AppShellState extends State<AppShell> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
-                            Text(
-                              'Luppo',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.white,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
+                            LuppoWordmark(fontSize: 18),
+                            SizedBox(height: 2),
                             Text(
                               'Gestión Comercial',
                               style: TextStyle(

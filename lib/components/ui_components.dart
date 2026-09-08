@@ -1,7 +1,63 @@
 import 'package:flutter/material.dart';
 import '../config/app_colors.dart';
 
-// 0. Official Luppo Logo (Concentric Target Iris)
+// 0. Official Luppo Wordmark (with the iconic teal dot in the 'O')
+class LuppoWordmark extends StatelessWidget {
+  final double fontSize;
+  final Color textColor;
+  final Color dotColor;
+
+  const LuppoWordmark({
+    super.key,
+    this.fontSize = 24,
+    this.textColor = AppColors.white,
+    this.dotColor = AppColors.tealAccent,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final oSize = fontSize * 0.86;
+    final borderWidth = (fontSize * 0.16).clamp(2.0, 5.0);
+    final dotSize = oSize * 0.36;
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          'LUPP',
+          style: TextStyle(
+            color: textColor,
+            fontSize: fontSize,
+            fontWeight: FontWeight.w900,
+            letterSpacing: 2.5,
+          ),
+        ),
+        const SizedBox(width: 2),
+        Container(
+          width: oSize,
+          height: oSize,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: textColor, width: borderWidth),
+          ),
+          child: Center(
+            child: Container(
+              width: dotSize,
+              height: dotSize,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: dotColor,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// Official Luppo Logo (Concentric Target Iris + Optional Wordmark)
 class LuppoLogo extends StatelessWidget {
   final double size;
   final bool showText;
@@ -59,14 +115,10 @@ class LuppoLogo extends StatelessWidget {
         ),
         if (showText) ...[
           const SizedBox(height: 10),
-          Text(
-            'LUPPO',
-            style: TextStyle(
-              color: textColor,
-              fontSize: fontSize,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 3,
-            ),
+          LuppoWordmark(
+            fontSize: fontSize,
+            textColor: textColor,
+            dotColor: AppColors.tealAccent,
           ),
         ],
       ],
@@ -110,15 +162,7 @@ class LuppoTopBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               const LuppoLogo(size: 32),
               const SizedBox(width: 12),
-              const Text(
-                'LUPPO',
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2.0,
-                  fontSize: 15,
-                ),
-              ),
+              const LuppoWordmark(fontSize: 16),
               const SizedBox(width: 16),
               Container(width: 1, height: 24, color: AppColors.secondaryBlue),
               const SizedBox(width: 16),

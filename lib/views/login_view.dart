@@ -147,20 +147,17 @@ class _LoginViewState extends State<LoginView> {
                       // Ícono oficial Luppo (Diana iris concéntrica)
                       const Center(
                         child: LuppoLogo(
-                          size: 64,
+                          size: 72,
                         ),
                       ),
-                      const SizedBox(height: 14),
+                      const SizedBox(height: 16),
 
-                      // Título de marca (idéntico a la referencia: tipografía blanca, negrita y espaciada)
-                      const Text(
-                        'LUPPO',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
+                      // Título de marca oficial con punto teal en la 'O'
+                      const Center(
+                        child: LuppoWordmark(
                           fontSize: 32,
-                          fontWeight: FontWeight.w900,
-                          color: AppColors.white,
-                          letterSpacing: 3.0,
+                          textColor: AppColors.white,
+                          dotColor: AppColors.tealAccent,
                         ),
                       ),
                       const SizedBox(height: 6),
