@@ -154,8 +154,8 @@ class _AppShellState extends State<AppShell> {
             Container(
               width: 250,
               decoration: const BoxDecoration(
-                color: AppColors.surface,
-                border: Border(right: BorderSide(color: AppColors.divider)),
+                color: AppColors.primary,
+                border: Border(right: BorderSide(color: AppColors.secondaryBlue, width: 1)),
               ),
               child: Column(
                 children: [
@@ -168,11 +168,11 @@ class _AppShellState extends State<AppShell> {
                           width: 38,
                           height: 38,
                           decoration: BoxDecoration(
-                            color: AppColors.primary,
+                            color: AppColors.secondaryBlue,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Center(
-                            child: Icon(Icons.show_chart, color: AppColors.accent, size: 24),
+                            child: Icon(Icons.show_chart, color: AppColors.tealAccent, size: 24),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -184,15 +184,15 @@ class _AppShellState extends State<AppShell> {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.primary,
-                                letterSpacing: -0.5,
+                                color: AppColors.white,
+                                letterSpacing: 0.5,
                               ),
                             ),
                             Text(
                               'Gestión Comercial',
                               style: TextStyle(
                                 fontSize: 11,
-                                color: AppColors.textSecondary,
+                                color: Color(0xFF94A3B8),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -201,7 +201,7 @@ class _AppShellState extends State<AppShell> {
                       ],
                     ),
                   ),
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(height: 1, color: AppColors.secondaryBlue),
                   const SizedBox(height: 12),
 
                   // Nav list
@@ -220,15 +220,18 @@ class _AppShellState extends State<AppShell> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                             decoration: BoxDecoration(
-                              color: isSelected ? AppColors.accentSoft : Colors.transparent,
+                              color: isSelected ? AppColors.secondaryBlue : Colors.transparent,
                               borderRadius: BorderRadius.circular(10),
+                              border: isSelected
+                                  ? Border.all(color: AppColors.tealAccent.withOpacity(0.4), width: 1)
+                                  : null,
                             ),
                             child: Row(
                               children: [
                                 Icon(
                                   isSelected ? item.activeIcon : item.icon,
                                   size: 20,
-                                  color: isSelected ? AppColors.accent : AppColors.textSecondary,
+                                  color: isSelected ? AppColors.tealAccent : const Color(0xFF94A3B8),
                                 ),
                                 const SizedBox(width: 14),
                                 Text(
@@ -236,7 +239,7 @@ class _AppShellState extends State<AppShell> {
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                                    color: isSelected ? AppColors.accent : AppColors.textPrimary,
+                                    color: isSelected ? AppColors.white : const Color(0xFFE2E8F0),
                                   ),
                                 ),
                               ],
@@ -248,17 +251,17 @@ class _AppShellState extends State<AppShell> {
                   ),
 
                   // Bottom User Info & Logout
-                  const Divider(height: 1, color: AppColors.divider),
+                  const Divider(height: 1, color: AppColors.secondaryBlue),
                   Container(
                     padding: const EdgeInsets.all(16),
                     child: Row(
                       children: [
                         CircleAvatar(
                           radius: 18,
-                          backgroundColor: AppColors.primary,
+                          backgroundColor: AppColors.tealAccent,
                           child: Text(
                             widget.currentUser.firstName.isNotEmpty ? widget.currentUser.firstName[0].toUpperCase() : 'U',
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                            style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 13),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -269,18 +272,18 @@ class _AppShellState extends State<AppShell> {
                             children: [
                               Text(
                                 '${widget.currentUser.firstName} ${widget.currentUser.lastName}',
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary),
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.white),
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
                                 widget.currentUser.roles.isNotEmpty ? widget.currentUser.roles.first.replaceAll('ROLE_', '') : 'Comercial',
-                                style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+                                style: const TextStyle(fontSize: 11, color: Color(0xFF94A3B8)),
                               ),
                             ],
                           ),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.logout, size: 18, color: AppColors.textSecondary),
+                          icon: const Icon(Icons.logout, size: 18, color: Color(0xFF94A3B8)),
                           tooltip: 'Cerrar sesión',
                           onPressed: widget.onLogout,
                         ),
