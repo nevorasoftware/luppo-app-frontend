@@ -7,7 +7,13 @@ import '../components/ui_components.dart';
 
 class DashboardView extends StatefulWidget {
   final Function(int)? onNavigateTab;
-  const DashboardView({super.key, this.onNavigateTab});
+  final AuthResponse? currentUser;
+
+  const DashboardView({
+    super.key,
+    this.onNavigateTab,
+    this.currentUser,
+  });
 
   @override
   State<DashboardView> createState() => _DashboardViewState();
@@ -18,13 +24,75 @@ class _DashboardViewState extends State<DashboardView> {
   DashboardOverview? _overview;
   bool _isLoading = true;
   String? _error;
+  AuthSession? _currentUser;
 
   final currencyFormatter = NumberFormat.currency(symbol: '\$', decimalDigits: 0);
 
   @override
   void initState() {
     super.initState();
+    _initUser();
     _loadDashboard();
+  }
+
+  void _initUser() {
+    _currentUser = widget.currentUser ?? _api.session;
+    if (_currentUser == null) {
+      ApiClient.getStoredUser().then((u) {
+        if (mounted && u != null) {
+          setState(() => _currentUser = u);
+        }
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant DashboardView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentUser != widget.currentUser && widget.currentUser != null) {
+      setState(() => _currentUser = widget.currentUser);
+    }
+  }
+
+  String _getDisplayName() {
+    final user = widget.currentUser ?? _currentUser ?? _api.session;
+    if (user != null) {
+      final first = user.firstName.trim();
+      if (first.isNotEmpty) return first;
+      final full = user.fullName.trim();
+      if (full.isNotEmpty) return full;
+      if (user.email.trim().isNotEmpty) {
+        final emailPart = user.email.trim().split('@').first;
+        if (emailPart.isNotEmpty) {
+          return emailPart[0].toUpperCase() + emailPart.substring(1);
+        }
+      }
+    }
+    return 'Super';
+  }
+
+  String _buildGreeting() {
+    // Hora oficial de El Salvador (UTC-6)
+    final nowUtc = DateTime.now().toUtc();
+    final elSalvadorTime = nowUtc.subtract(const Duration(hours: 6));
+    final hour = elSalvadorTime.hour;
+
+    String emote;
+    String greeting;
+
+    if (hour >= 5 && hour < 12) {
+      emote = '☀️';
+      greeting = 'Buenos días';
+    } else if (hour >= 12 && hour < 19) {
+      emote = '☀️';
+      greeting = 'Buenas tardes';
+    } else {
+      emote = '🌙';
+      greeting = 'Buenas noches';
+    }
+
+    final name = _getDisplayName();
+    return '$emote $greeting, $name 👤';
   }
 
   Future<void> _loadDashboard() async {
@@ -102,13 +170,35 @@ class _DashboardViewState extends State<DashboardView> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      data.todayFormatted,
+                      _buildGreeting(),
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimary,
                       ),
                     ),
+                    if (data.todayFormatted.isNotEmpty) ...[
+                      const SizedBox(height: 4),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.calendar_today_outlined,
+                            size: 13,
+                            color: AppColors.textSecondary,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            data.todayFormatted,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ],
                 ),
                 ElevatedButton.icon(

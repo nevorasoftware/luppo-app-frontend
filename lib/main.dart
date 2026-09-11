@@ -108,15 +108,23 @@ class AppShell extends StatefulWidget {
 
 class _AppShellState extends State<AppShell> {
   int _selectedIndex = 0;
+  late final List<Widget> _views;
 
-  final List<Widget> _views = const [
-    DashboardView(),
-    ProspectsView(),
-    ProspectingView(),
-    PipelineView(),
-    FollowUpsView(),
-    ContactView(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _views = [
+      DashboardView(
+        currentUser: widget.currentUser,
+        onNavigateTab: (idx) => setState(() => _selectedIndex = idx),
+      ),
+      const ProspectsView(),
+      const ProspectingView(),
+      const PipelineView(),
+      const FollowUpsView(),
+      const ContactView(),
+    ];
+  }
 
   final List<_NavItem> _navItems = const [
     _NavItem(title: 'Mi Día Comercial', shortTitle: 'Mi Día', icon: Icons.dashboard_outlined, activeIcon: Icons.dashboard),
