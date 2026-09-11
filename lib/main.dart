@@ -9,6 +9,7 @@ import 'views/prospects_view.dart';
 import 'views/prospecting_view.dart';
 import 'views/pipeline_view.dart';
 import 'views/follow_ups_view.dart';
+import 'views/contact_view.dart';
 import 'components/ui_components.dart';
 
 void main() async {
@@ -114,14 +115,16 @@ class _AppShellState extends State<AppShell> {
     ProspectingView(),
     PipelineView(),
     FollowUpsView(),
+    ContactView(),
   ];
 
   final List<_NavItem> _navItems = const [
-    _NavItem(title: 'Mi Día Comercial', icon: Icons.dashboard_outlined, activeIcon: Icons.dashboard),
-    _NavItem(title: 'Mis KYC', icon: Icons.people_outline, activeIcon: Icons.people),
-    _NavItem(title: 'Metas Diarias', icon: Icons.track_changes_outlined, activeIcon: Icons.track_changes),
-    _NavItem(title: 'Cartera (Pipeline)', icon: Icons.account_tree_outlined, activeIcon: Icons.account_tree),
-    _NavItem(title: 'Seguimientos', icon: Icons.calendar_today_outlined, activeIcon: Icons.calendar_today),
+    _NavItem(title: 'Mi Día Comercial', shortTitle: 'Mi Día', icon: Icons.dashboard_outlined, activeIcon: Icons.dashboard),
+    _NavItem(title: 'Mis KYC', shortTitle: 'Mis KYC', icon: Icons.people_outline, activeIcon: Icons.people),
+    _NavItem(title: 'Metas Diarias', shortTitle: 'Metas', icon: Icons.track_changes_outlined, activeIcon: Icons.track_changes),
+    _NavItem(title: 'Cartera (Pipeline)', shortTitle: 'Cartera', icon: Icons.account_tree_outlined, activeIcon: Icons.account_tree),
+    _NavItem(title: 'Seguimientos', shortTitle: 'Seguimientos', icon: Icons.calendar_today_outlined, activeIcon: Icons.calendar_today),
+    _NavItem(title: 'Contáctanos', shortTitle: 'Contacto', icon: Icons.alternate_email_outlined, activeIcon: Icons.alternate_email),
   ];
 
   @override
@@ -297,13 +300,15 @@ class _AppShellState extends State<AppShell> {
               unselectedItemColor: AppColors.textSecondary,
               type: BottomNavigationBarType.fixed,
               backgroundColor: AppColors.surface,
+              selectedFontSize: 11,
+              unselectedFontSize: 10,
               elevation: 8,
               items: _navItems
                   .map(
                     (item) => BottomNavigationBarItem(
-                      icon: Icon(item.icon),
-                      activeIcon: Icon(item.activeIcon),
-                      label: item.title,
+                      icon: Icon(item.icon, size: 22),
+                      activeIcon: Icon(item.activeIcon, size: 22),
+                      label: item.shortTitle ?? item.title,
                     ),
                   )
                   .toList(),
@@ -315,11 +320,13 @@ class _AppShellState extends State<AppShell> {
 
 class _NavItem {
   final String title;
+  final String? shortTitle;
   final IconData icon;
   final IconData activeIcon;
 
   const _NavItem({
     required this.title,
+    this.shortTitle,
     required this.icon,
     required this.activeIcon,
   });
