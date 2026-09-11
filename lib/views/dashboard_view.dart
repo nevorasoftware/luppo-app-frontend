@@ -68,7 +68,7 @@ class _DashboardViewState extends State<DashboardView> {
         }
       }
     }
-    return 'Super';
+    return 'Usuario';
   }
 
   String _buildGreeting() {
@@ -81,12 +81,15 @@ class _DashboardViewState extends State<DashboardView> {
     String greeting;
 
     if (hour >= 5 && hour < 12) {
-      emote = '☀️';
+      // 5:00 a. m. a 11:59 a. m.
+      emote = '🌅';
       greeting = 'Buenos días';
     } else if (hour >= 12 && hour < 19) {
+      // 12:00 p. m. a 6:59 p. m.
       emote = '☀️';
       greeting = 'Buenas tardes';
     } else {
+      // 7:00 p. m. a 4:59 a. m.
       emote = '🌙';
       greeting = 'Buenas noches';
     }
