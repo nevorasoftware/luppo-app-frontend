@@ -147,77 +147,89 @@ class LuppoTopBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(64);
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Container(
-      height: preferredSize.height,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      decoration: const BoxDecoration(
+      constraints: const BoxConstraints(minHeight: 64),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
         color: AppColors.primary,
-        border: Border(bottom: BorderSide(color: AppColors.secondaryBlue, width: 1)),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.secondaryBlue, width: 1),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              const LuppoLogo(size: 32),
-              const SizedBox(width: 12),
-              const LuppoWordmark(fontSize: 16),
-              const SizedBox(width: 16),
-              Container(width: 1, height: 24, color: AppColors.secondaryBlue),
-              const SizedBox(width: 16),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: AppColors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
+          Expanded(
+            child: Row(
+              children: [
+                const LuppoLogo(size: 32),
+                const SizedBox(width: 10),
+                const LuppoWordmark(fontSize: 16),
+                const SizedBox(width: 12),
+                Container(width: 1, height: 24, color: AppColors.secondaryBlue),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          color: AppColors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        subtitle,
+                        style: const TextStyle(
+                          color: Color(0xFF94A3B8),
+                          fontSize: 11,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (actions != null || userFullName.isNotEmpty || onLogout != null)
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (actions != null) ...actions!,
+                if (userFullName.isNotEmpty) ...[
+                  const SizedBox(width: 8),
+                  CircleAvatar(
+                    radius: 16,
+                    backgroundColor: AppColors.tealAccent,
+                    child: Text(
+                      userFullName.isNotEmpty ? userFullName[0].toUpperCase() : 'U',
+                      style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 13),
                     ),
                   ),
+                  const SizedBox(width: 10),
                   Text(
-                    subtitle,
-                    style: const TextStyle(
-                      color: Color(0xFF94A3B8),
-                      fontSize: 12,
-                    ),
+                    userFullName,
+                    style: const TextStyle(color: AppColors.white, fontSize: 13, fontWeight: FontWeight.w500),
                   ),
                 ],
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              if (actions != null) ...actions!,
-              if (userFullName.isNotEmpty) ...[
-                const SizedBox(width: 8),
-                CircleAvatar(
-                  radius: 16,
-                  backgroundColor: AppColors.tealAccent,
-                  child: Text(
-                    userFullName.isNotEmpty ? userFullName[0].toUpperCase() : 'U',
-                    style: const TextStyle(color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                if (onLogout != null) ...[
+                  const SizedBox(width: 12),
+                  IconButton(
+                    icon: const Icon(Icons.logout, color: Color(0xFF94A3B8), size: 18),
+                    tooltip: 'Cerrar sesión',
+                    onPressed: onLogout,
                   ),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  userFullName,
-                  style: const TextStyle(color: AppColors.white, fontSize: 13, fontWeight: FontWeight.w500),
-                ),
+                ],
               ],
-              if (onLogout != null) ...[
-                const SizedBox(width: 16),
-                IconButton(
-                  icon: const Icon(Icons.logout, color: Color(0xFF94A3B8), size: 18),
-                  tooltip: 'Cerrar sesión',
-                  onPressed: onLogout,
-                ),
-              ],
-            ],
-          )
+            )
         ],
       ),
     );
@@ -314,7 +326,7 @@ class StatCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(12),
@@ -329,22 +341,26 @@ class StatCard extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: Text(
                     title.toUpperCase(),
                     style: const TextStyle(
                       color: AppColors.textSecondary,
-                      fontSize: 12,
+                      fontSize: 11,
                       fontWeight: FontWeight.w600,
                       letterSpacing: 0.5,
                     ),
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                const SizedBox(width: 8),
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
@@ -355,19 +371,21 @@ class StatCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-            Row(
+            const SizedBox(height: 10),
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 8,
+              runSpacing: 4,
               children: [
                 Text(
                   value,
                   style: const TextStyle(
                     color: AppColors.textPrimary,
-                    fontSize: 26,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                if (badgeText != null) ...[
-                  const SizedBox(width: 8),
+                if (badgeText != null)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
@@ -383,7 +401,6 @@ class StatCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                ],
               ],
             ),
             if (subtitle != null) ...[
@@ -391,6 +408,8 @@ class StatCard extends StatelessWidget {
               Text(
                 subtitle!,
                 style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
             ]
           ],
