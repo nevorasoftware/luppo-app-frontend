@@ -288,7 +288,7 @@ class _DashboardViewState extends State<DashboardView> {
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
-                  childAspectRatio: isWide ? 1.6 : 1.2,
+                  childAspectRatio: isWide ? 1.45 : 1.15,
                   children: [
                     StatCard(
                       title: 'KYC registrados',
@@ -423,7 +423,7 @@ class _DashboardViewState extends State<DashboardView> {
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
-                  childAspectRatio: isWide ? 1.8 : 1.3,
+                  childAspectRatio: isWide ? 1.55 : 1.15,
                   children: [
                     StatCard(
                       title: 'Meta mensual',
